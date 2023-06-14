@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./stylesheets/style.css">
+  <title><%= locals.title %></title>
+</head>
+<body class="min-h-screen flex items-center justify-center gap-8 flex-col bg-neutral-50 text-neutral-700">
+  <h1 class="text-4xl font-bold"><span class="text-transparent bg-clip-text bg-gradient-to-tr from-lime-500 to-emerald-500">Story</span>Sphere</h1>
+  <div class="flex flex-col gap-4 p-4 bg-white w-96 rounded-xl shadow-sm">
+    <h3 class="text-xl font-bold">Create a new account</h3>
+    <form action="" method="POST" class="flex flex-col gap-4">
+      <div class="flex flex-col gap-1">
+        <label for="fullName" aria-required="true">Your full name: <span class="text-red-500 text-sm">*</span></label>
+        <input class="p-1 border border-solid border-neutral-300 rounded-md outline-none focus:ring-2 ring-lime-500 ring-offset-1 transition-all" type="text" id="fullName" name="fullName" required value="<%= locals.newUser?.fullName ? locals.newUser.fullName : undefined %>">
+        <% if (locals.errors) { %>
+          <% for (let i = 0; i < locals.errors.length; i++) { %>
+            <% if (locals.errors[i].path === "fullName") { %>
+              <p class="text-red-500"><%= errors[i].msg %></p>
+            <% } %>
+          <% } %>
+        <% } %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="username" aria-required="true">Your username: <span class="text-red-500 text-sm">*</span></label>
+        <input class="p-1 border border-solid border-neutral-300 rounded-md outline-none focus:ring-2 ring-lime-500 ring-offset-1 transition-all" type="text" id="username" name="username" required value="<%= locals.newUser?.username ? locals.newUser.username : undefined %>">
+        <% if (locals.errors) { %>
+          <% for (let i = 0; i < locals.errors.length; i++) { %>
+            <% if (locals.errors[i].path === "username") { %>
+              <p class="text-red-500"><%= errors[i].msg %></p>
+            <% } %>
+          <% } %>
+        <% } %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="password" aria-required="true">New password: <span class="text-red-500 text-sm">*</span></label>
+        <input class="p-1 border border-solid border-neutral-300 rounded-md outline-none focus:ring-2 ring-lime-500 ring-offset-1 transition-all" type="password" id="password" name="password" required value="<%= locals.newUser?.password ? locals.newUser.password : undefined %>">
+        <% if (locals.errors) { %>
+          <% for (let i = 0; i < locals.errors.length; i++) { %>
+            <% if (locals.errors[i].path === "password") { %>
+              <p class="text-red-500"><%= errors[i].msg %></p>
+            <% } %>
+          <% } %>
+        <% } %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="confirmPassword" aria-required="true">Confirm the password: <span class="text-red-500 text-sm">*</span></label>
+        <input class="p-1 border border-solid border-neutral-300 rounded-md outline-none focus:ring-2 ring-lime-500 ring-offset-1 transition-all" type="password" id="confirmPassword" name="confirmPassword" required value="<%= locals.newUser?.confirmPassword ? locals.newUser.confirmPassword : undefined %>">
+        <% if (locals.errors) { %>
+          <% for (let i = 0; i < locals.errors.length; i++) { %>
+            <% if (locals.errors[i].path === "confirmPassword") { %>
+              <p class="text-red-500"><%= errors[i].msg %></p>
+            <% } %>
+          <% } %>
+        <% } %>
+      </div>
+      <button type="submit" class="p-2 shadow-sm bg-gradient-to-tr from-lime-500 to-emerald-500 text-white font-bold rounded-md hover:shadow-lg transition-all outline-none focus:ring-2 ring-lime-500 ring-offset-1">Sign Up</button>
+    </form>
+  </div>
+</body>
+</html>
