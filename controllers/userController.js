@@ -2,6 +2,8 @@
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const bcryptjs = require("bcryptjs");
+const PasswordValidator = require("password-validator");
+const he = require("he");
 
 const User = require("../models/user");
 
@@ -10,6 +12,20 @@ exports.signUpGET = asyncHandler(async (req, res) => {
     title: "Sign Up",
   });
 });
+
+const passwordSchema = new PasswordValidator();
+
+passwordSchema
+  .is()
+  .min(8) // Minimum length requirement
+  .has()
+  .uppercase() // Require at least one uppercase letter
+  .has()
+  .lowercase() // Require at least one lowercase letter
+  .has()
+  .digits() // Require at least one digit
+  .has()
+  .symbols(); // Require at least one special character
 
 exports.signUpPOST = [
   body("fullName", "This field is required.")
@@ -21,18 +37,31 @@ exports.signUpPOST = [
     .trim()
     .isLength({ min: 1, max: 30 })
     .withMessage("Username should be between 1 and 30 characters long.")
+    .escape()
     .custom(async (value) => {
       const existingUser = await User.findOne({ username: value });
       if (existingUser) {
         throw new Error("A user with this username already exists.");
+      } else {
+        return true;
+      }
+    }),
+  body("password", "This field is required.")
+    .trim()
+    .custom((value) => {
+      if (!passwordSchema.validate(value)) {
+        throw new Error(
+          "The password must include at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long."
+        );
+      } else {
+        return true;
       }
     })
     .escape(),
-  body("password", "This field is required.").trim().escape(),
   body("confirmPassword", "Passwords do not match.")
     .trim()
-    .custom((value, { req }) => value === req.body.password)
-    .escape(),
+    .escape()
+    .custom((value, { req }) => value === req.body.password),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
@@ -52,10 +81,10 @@ exports.signUpPOST = [
             title: "Sign Up",
             errors: errors.array(),
             newUser: {
-              fullName: req.body.fullName,
-              username: req.body.username,
-              password: req.body.password,
-              confirmPassword: req.body.confirmPassword,
+              fullName: he.decode(req.body.fullName),
+              username: he.decode(req.body.username),
+              password: he.decode(req.body.password),
+              confirmPassword: he.decode(req.body.confirmPassword),
             },
           });
         } else {
