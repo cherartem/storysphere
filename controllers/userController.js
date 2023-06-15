@@ -111,3 +111,13 @@ exports.signInPOST = [
     failureRedirect: "/signIn",
   }),
 ];
+
+exports.logOutGET = asyncHandler(async (req, res, next) => {
+  req.logout((error) => {
+    if (error) {
+      next(error);
+    } else {
+      res.redirect("/");
+    }
+  });
+});

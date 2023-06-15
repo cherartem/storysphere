@@ -18,6 +18,7 @@ require("dotenv").config();
 const indexRouter = require("./routes/index");
 const signUpRouter = require("./routes/signUp");
 const signInRouter = require("./routes/signIn");
+const logOutRouter = require("./routes/logOut");
 
 const app = express();
 
@@ -117,6 +118,7 @@ app.use((req, res, next) => {
 app.use("/", indexRouter);
 app.use("/signUp", signUpRouter);
 app.use("/signIn", signInRouter);
+app.use("/logOut", logOutRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -7,7 +7,21 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
   <title>StorySphere: <%= locals.title %></title>
 </head>
-<body>
-  <h1>Hello World, <%= locals.currentUser.fullName %></h1>
+<body class="bg-neutral-50 text-neutral-700">
+  <div class="px-4 xl:px-80 w-full flex flex-col">
+    <nav class="w-full py-4 bg-neutral-50 flex flex-row justify-between items-center">
+      <a href="/" class="text-2xl font-bold"><span class="text-transparent bg-clip-text bg-gradient-to-tr from-lime-500 to-emerald-500">Story</span>Sphere</a>
+      <ul class="flex flex-row gap-4 items-center">
+        <a href="" class="hover:underline">All Spheres</a>
+        <a href="" class="hover:underline">New Sphere</a>
+        <a href="" class="hover:underline">All Stories</a>
+        <a href="" class="hover:underline">New Story</a>
+      </ul>
+    </nav>
+    <div class="flex flex-row justify-between items-center p-2 bg-white shadow-sm rounded-md">
+      <h1 class="text-xl pl-2">Welcome back, <%= locals.currentUser.fullName %></h1>
+      <a href="/logOut" class="text-red-500 p-2 hover:bg-red-50 hover:text-red-800 transition-all rounded-md">Log Out</a>
+    </div>
+  </div>
 </body>
 </html>
