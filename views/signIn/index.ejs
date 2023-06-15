@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./stylesheets/style.css">
+  <title><%= locals.title %></title>
+</head>
+<body class="min-h-screen flex items-center justify-center gap-8 flex-col bg-neutral-50 text-neutral-700">
+  <h1 class="text-4xl font-bold"><span class="text-transparent bg-clip-text bg-gradient-to-tr from-lime-500 to-emerald-500">Story</span>Sphere</h1>
+  <div class="flex flex-col gap-4 p-4 bg-white w-96 rounded-xl shadow-sm">
+    <h3 class="text-xl font-bold">Sign in to your account</h3>
+    <% if (locals.messages?.error) { %>
+      <p class="p-2 bg-red-200 border border-solid border-red-500 shadow-sm rounded-md text-red-800"><%= locals.messages.error %></p>
+    <% } %>
+    <form action="" method="POST" class="flex flex-col gap-4">
+      <div class="flex flex-col gap-1">
+        <label for="username" aria-required="true">Your username: <span class="text-red-500 text-sm">*</span></label>
+        <input class="p-1 border border-solid border-neutral-300 rounded-md outline-none focus:ring-2 ring-lime-500 ring-offset-1 transition-all" type="text" id="username" name="username" required value="<%= locals.user?.username ? locals.newUser.username : undefined %>">
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="password" aria-required="true">Your password: <span class="text-red-500 text-sm">*</span></label>
+        <input class="p-1 border border-solid border-neutral-300 rounded-md outline-none focus:ring-2 ring-lime-500 ring-offset-1 transition-all" type="password" id="password" name="password" required value="<%= locals.user?.password ? locals.user.password : undefined %>">
+      </div>
+      <button type="submit" class="p-2 shadow-sm bg-gradient-to-tr from-lime-500 to-emerald-500 text-white font-bold rounded-md hover:shadow-lg transition-all outline-none focus:ring-2 ring-lime-500 ring-offset-1">Sign In</button>
+    </form>
+    <a href="/signUp" class="text-center text-lime-500 hover:underline">Don't have an account yet?</a>
+  </div>
+  <div class="flex flex-row gap-2 text-neutral-500">
+    <a class="hover:text-neutral-900 transition-all" href="https://twitter.com/cherrartem" target="_blank">My Twitter</a>
+    <span class="text-neutral-300">&#x2022;</span>
+    <a class="hover:text-neutral-900 transition-all" href="https://github.com/TemaTech" target="_blank">My Github</a>
+  </div>
+</body>
+</html>

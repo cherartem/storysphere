@@ -11,11 +11,13 @@ const helmet = require("helmet");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const bcryptjs = require("bcryptjs");
 
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
 const signUpRouter = require("./routes/signUp");
+const signInRouter = require("./routes/signIn");
 
 const app = express();
 
@@ -42,6 +44,47 @@ app.use(helmet());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+// Set up the LocalStrategy
+const User = require("./models/user");
+
+passport.use(
+  // eslint-disable-next-line consistent-return
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username });
+      if (!user) {
+        return done(null, false, {
+          message: "The user with this username does not exist.",
+        });
+      }
+      bcryptjs.compare(password, user.password, (error, res) => {
+        if (res) {
+          return done(null, user);
+        }
+        return done(null, false, {
+          message: "The password you entered is incorrect. Please try again.",
+        });
+      });
+    } catch (error) {
+      return done(error);
+    }
+  })
+);
+
+// Allow users to stay logged in as they move around the app
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
+});
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -57,8 +100,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Redirect the user to the sign in page if he isn't authenticated
+app.use((req, res, next) => {
+  if (!req.user && req.url !== "/signIn" && req.url !== "/signUp") {
+    res.redirect("/signIn");
+  } else {
+    next();
+  }
+});
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 app.use("/", indexRouter);
 app.use("/signUp", signUpRouter);
+app.use("/signIn", signInRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

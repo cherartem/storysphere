@@ -4,14 +4,9 @@ const { body, validationResult } = require("express-validator");
 const bcryptjs = require("bcryptjs");
 const PasswordValidator = require("password-validator");
 const he = require("he");
+const passport = require("passport");
 
 const User = require("../models/user");
-
-exports.signUpGET = asyncHandler(async (req, res) => {
-  res.render("signUp/index", {
-    title: "Sign Up",
-  });
-});
 
 const passwordSchema = new PasswordValidator();
 
@@ -26,6 +21,12 @@ passwordSchema
   .digits() // Require at least one digit
   .has()
   .symbols(); // Require at least one special character
+
+exports.signUpGET = asyncHandler(async (req, res) => {
+  res.render("signUp/index", {
+    title: "Sign Up",
+  });
+});
 
 exports.signUpPOST = [
   body("fullName", "This field is required.")
@@ -93,5 +94,20 @@ exports.signUpPOST = [
         }
       }
     });
+  }),
+];
+
+exports.signInGET = asyncHandler(async (req, res) => {
+  res.render("signIn/index", {
+    title: "Sign In",
+  });
+});
+
+exports.signInPOST = [
+  body("username").trim().escape(),
+  body("password").trim().escape(),
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/signIn",
   }),
 ];
