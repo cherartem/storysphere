@@ -35,22 +35,6 @@
         </div>
       </div>
     <% } %>
-    <div class="flex flex-col gap-8">
-      <% for (let i = 0; i < locals.sortedStories.length; i++) { %>
-        <div class="flex flex-col gap-2 p-4 shadow-sm bg-white rounded-md">
-          <% if (locals.sphere.members.includes(locals.currentUser._id)) { %>
-            <div class="flex flex-row items-center justify-between">
-              <h3 class="text-lime-600"><%= locals.sphere.stories[i].author.username %></h3>
-              <% if (locals.sphere.admins.includes(locals.currentUser._id)) { %>
-                <a class="text-red-500 hover:underline" href="/spheres/<%= locals.sphere._id %>/<%= locals.sphere.stories[i]._id %>/delete">Delete the story</a>
-              <% } %>
-            </div>
-          <% } %>
-          <h2 class="font-bold"><%= locals.sphere.stories[i].title %></h2>
-          <p><%= locals.sphere.stories[i].story %></p>
-        </div>
-      <% } %>
-    </div>
   </div>
 </body>
 </html>
