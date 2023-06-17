@@ -16,27 +16,17 @@
         <a href="/spheres/createNew" class="hover:underline">New Sphere</a>
       </ul>
     </nav>
-    <div class="flex flex-row justify-between items-center p-2 bg-white shadow-sm rounded-md">
-      <h1 class="text-xl pl-2 font-semibold">Welcome back, <%= locals.currentUser.fullName %></h1>
-      <a href="/logOut" class="text-red-500 p-2 hover:bg-red-50 hover:text-red-800 transition-all rounded-md">Log Out</a>
+    <div class="flex flex-row items-center justify-between">
+      <h1 class="text-2xl font-semibold"><%= locals.sphere.name %></h1>
+      <% if (locals.sphere.members.includes(locals.currentUser._id)) { %>
+        <a class="p-2 rounded-md shadow-sm bg-gradient-to-tr from-lime-500 to-emerald-500 text-white font-semibold hover:shadow-md transition-all" href="/spheres/<%= locals.sphere._id %>/createNew">Post your story</a>
+      <% } else { %>
+        <a class="p-2 rounded-md shadow-sm bg-gradient-to-tr from-lime-500 to-emerald-500 text-white font-semibold hover:shadow-md transition-all" href="/spheres/<%= locals.sphere._id %>/join">Join this Sphere</a>
+      <% } %>
     </div>
-    <% if (locals.top4Spheres) { %>
-      <div class="flex flex-col gap-2">
-        <p>Spheres with the most stories</p>
-        <div class="grid grid-cols-1 grid-rows-4 lg:grid-cols-2 lg:grid-rows-2 gap-2">
-          <% for (let i = 0; i < locals.top4Spheres.length; i++) { %>
-            <a href="/spheres/<%= locals.top4Spheres[i]._id %>" target="_blank">
-              <div class="flex flex-row gap-2 p-2 bg-white shadow-sm rounded-md hover:shadow-md transition-all">
-                <p><%= i + 1 %>.</p>
-                <p><%= locals.top4Spheres[i].name %></p>
-              </div>
-            </a>
-          <% } %>
-        </div>
-      </div>
-    <% } %>
+    <p class="mb-4"><%= locals.sphere.description %></p>
     <div class="flex flex-col gap-8">
-      <% for (let i = 0; i < locals.sortedStories.length; i++) { %>
+      <% for (let i = 0; i < locals.sphere.stories.length; i++) { %>
         <div class="flex flex-col gap-2 p-4 shadow-sm bg-white rounded-md">
           <% if (locals.sphere.members.includes(locals.currentUser._id)) { %>
             <div class="flex flex-row items-center justify-between">

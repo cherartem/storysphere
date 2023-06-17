@@ -19,33 +19,32 @@
     <div class="flex items-center justify-center">
       <div class="w-full lg:w-96 h-full">
         <div class="flex flex-col gap-2">
-          <h1 class="text-4xl font-bold text-lime-500">Create a new Sphere</h1>
-          <p class="italic text-neutral-500">&#9432; Sphere is a collective where folks can share their captivating and diverse stories on a range of subjects.</p>
+          <h1 class="text-xl font-bold text-lime-500">Post your story in <%= locals.sphere?.name %></h1>
         </div>
         <form action="" method="POST" class="flex flex-col gap-4">
           <div class="flex flex-col gap-1">
-            <label for="name" aria-required="true">Sphere name: <span class="text-red-500 text-sm">*</span></label>
-            <input class="p-1 border border-solid border-neutral-300 rounded-md outline-none focus:ring-2 ring-lime-500 ring-offset-1 transition-all" type="text" id="name" name="name" required value="<%= locals.newSphere?.name ? locals.newSphere.name : undefined %>">
+            <label for="title" aria-required="true">Story title: <span class="text-red-500 text-sm">*</span></label>
+            <input class="p-1 border border-solid border-neutral-300 rounded-md outline-none focus:ring-2 ring-lime-500 ring-offset-1 transition-all" type="text" id="title" name="title" required value="<%= locals.newStory?.title ? locals.newStory.title : undefined %>">
             <% if (locals.errors) { %>
               <% for (let i = 0; i < locals.errors.length; i++) { %>
-                <% if (locals.errors[i].path === "name") { %>
+                <% if (locals.errors[i].path === "title") { %>
                   <p class="text-red-500"><%= errors[i].msg %></p>
                 <% } %>
               <% } %>
             <% } %>
           </div>
           <div class="flex flex-col gap-1">
-            <label for="description" aria-required="true">Sphere description: <span class="text-red-500 text-sm">*</span></label>
-            <textarea class="p-1 border resize-none h-40 border-solid border-neutral-300 rounded-md outline-none focus:ring-2 ring-lime-500 ring-offset-1 transition-all" type="text" id="description" name="description" required></textarea>
+            <label for="story" aria-required="true">Your story: <span class="text-red-500 text-sm">*</span></label>
+            <textarea class="p-1 border resize-none h-40 border-solid border-neutral-300 rounded-md outline-none focus:ring-2 ring-lime-500 ring-offset-1 transition-all" type="text" id="story" name="story" required></textarea>
             <% if (locals.errors) { %>
               <% for (let i = 0; i < locals.errors.length; i++) { %>
-                <% if (locals.errors[i].path === "description") { %>
+                <% if (locals.errors[i].path === "story") { %>
                   <p class="text-red-500"><%= errors[i].msg %></p>
                 <% } %>
               <% } %>
             <% } %>
           </div>
-          <button type="submit" class="p-2 shadow-sm bg-gradient-to-tr from-lime-500 to-emerald-500 text-white font-bold rounded-md hover:shadow-lg transition-all outline-none focus:ring-2 ring-lime-500 ring-offset-1">Submit</button>
+          <button type="submit" class="p-2 shadow-sm bg-gradient-to-tr from-lime-500 to-emerald-500 text-white font-bold rounded-md hover:shadow-lg transition-all outline-none focus:ring-2 ring-lime-500 ring-offset-1">Submit your story</button>
         </form>
       </div>
     </div>

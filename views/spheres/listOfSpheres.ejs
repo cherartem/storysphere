@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <title>StorySphere: <%= locals.title %></title>
+</head>
+<body class="bg-neutral-50 text-neutral-700">
+  <div class="px-4 xl:px-80 w-full flex flex-col relative gap-4">
+    <nav class="w-full py-4 bg-neutral-50 flex flex-row justify-between items-center sticky top-0">
+      <a href="/" class="text-2xl font-bold"><span class="text-transparent bg-clip-text bg-gradient-to-tr from-lime-500 to-emerald-500">Story</span>Sphere</a>
+      <ul class="flex flex-row gap-4 items-center">
+        <a href="/spheres" class="hover:underline">All Spheres</a>
+        <a href="/spheres/createNew" class="hover:underline">New Sphere</a>
+      </ul>
+    </nav>
+    <div class="flex flex-col gap-2">
+      <p>All spheres sorted by the most stories in them</p>
+      <div class="grid grid-cols-1 grid-rows-4 lg:grid-cols-2 lg:grid-rows-2 gap-2">
+        <% for (let i = 0; i < locals.allSpheres.length; i++) { %>
+          <a href="/spheres/<%= locals.allSpheres[i]._id %>" target="_blank">
+            <div class="flex flex-col gap-2 p-2 bg-white shadow-sm rounded-md hover:shadow-md transition-all">
+              <p class="font-bold text-xl"><%= locals.allSpheres[i].name %></p>
+              <p><%= locals.allSpheres[i].description %></p>
+            </div>
+          </a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

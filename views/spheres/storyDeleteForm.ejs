@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <title>StorySphere: <%= locals.title %></title>
+</head>
+<body class="bg-neutral-50 text-neutral-700">
+  <div class="px-4 xl:px-80 w-full flex flex-col relative gap-4">
+    <nav class="w-full py-4 bg-neutral-50 flex flex-row justify-between items-center sticky top-0">
+      <a href="/" class="text-2xl font-bold"><span class="text-transparent bg-clip-text bg-gradient-to-tr from-lime-500 to-emerald-500">Story</span>Sphere</a>
+      <ul class="flex flex-row gap-4 items-center">
+        <a href="/spheres" class="hover:underline">All Spheres</a>
+        <a href="/spheres/createNew" class="hover:underline">New Sphere</a>
+      </ul>
+    </nav>
+    <div class="flex items-center justify-center">
+      <div class="flex flex-col gap-4">
+        <h1 class="text-2xl">Are you sure that you want to delete this story?</h1>
+        <div class="flex flex-col gap-2 p-4 shadow-sm bg-white rounded-md">
+          <h3 class="text-lime-600"><%= locals.story.author.username %></h3>
+          <h2 class="font-bold"><%= locals.story.title %></h2>
+          <p><%= locals.story.story %></p>
+        </div>
+        <form action="" method="POST" class="flex flex-row gap-2 items-center justify-center">
+          <a class="p-2 rounded-md shadow-sm hover:shadow-md bg-neutral-700 text-white transition-all" href="<%= locals.cancelLink %>">Cancel</a>
+          <button class="p-2 shadow-sm rounded-md hover:shadow-md bg-red-500 text-white transition-all" type="submit">Delete the story</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

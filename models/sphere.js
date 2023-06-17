@@ -4,9 +4,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const SphereSchema = new Schema({
-  admin: { type: Schema.Types.ObjectId, ref: "User" },
-  name: { type: String, required: true },
-  description: String,
+  admins: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  members: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  name: { type: String, required: true, min: 1, max: 30 },
+  description: { type: String, required: true, min: 1, max: 150 },
   stories: [{ type: Schema.Types.ObjectId, ref: "Story" }],
 });
 

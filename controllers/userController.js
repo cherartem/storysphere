@@ -40,7 +40,7 @@ exports.signUpPOST = [
     .withMessage("Username should be between 1 and 30 characters long.")
     .escape()
     .custom(async (value) => {
-      const existingUser = await User.findOne({ username: value });
+      const existingUser = await User.findOne({ username: value }).exec();
       if (existingUser) {
         throw new Error("A user with this username already exists.");
       } else {
